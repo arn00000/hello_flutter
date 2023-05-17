@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>94774361925-nd4g1lhndl7b6q5c57mdj06nhu3vdp9g.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.94774361925-nd4g1lhndl7b6q5c57mdj06nhu3vdp9g</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDMQow2Wdi7L1yzwyVlJ36Bae5GylDKgMU</string>
+	<key>GCM_SENDER_ID</key>
+	<string>94774361925</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.caaron.helloFlutter</string>
+	<key>PROJECT_ID</key>
+	<string>productcatelogue-c7b69</string>
+	<key>STORAGE_BUCKET</key>
+	<string>productcatelogue-c7b69.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:94774361925:ios:ff05759daa2a38963f482c</string>
+	<key>DATABASE_URL</key>
+	<string>https://productcatelogue-c7b69-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>
