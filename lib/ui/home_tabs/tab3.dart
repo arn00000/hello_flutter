@@ -20,7 +20,7 @@ class ThirdTab extends StatefulWidget {
 
 class _ThirdTabState extends State<ThirdTab> {
   final repo = UserRepoImpl();
-  File? image;
+    File? image;
   String base64ImageString = "";
   User? _user;
 

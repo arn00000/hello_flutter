@@ -18,25 +18,25 @@ class _LoginState extends State<Login> {
   var _emailError = "";
   var _passError = "";
 
-  _onClickRegister(){
+  _onClickRegister() {
     setState(() {
       context.push("/register");
     });
   }
-  
-  _onClickPerson(){
+
+  _onClickPerson() {
     setState(() {
       context.push("/persons");
     });
   }
 
-  _onClickContact(){
+  _onClickContact() {
     setState(() {
       context.push("/contacts");
     });
   }
 
-  _onClickDesign(){
+  _onClickDesign() {
     setState(() {
       context.push("/design");
     });
@@ -82,20 +82,23 @@ class _LoginState extends State<Login> {
     //           {debugPrint("wrong credential")}
     //       });
     // }
-    AuthService.authenticate(_email, _pass, (status)=>{
-        if (status)
-          {context.go("/home")}
-        else
-          {debugPrint("wrong credential")}
-    });
+    AuthService.authenticate(
+        _email,
+        _pass,
+        (status) => {
+              if (status)
+                {context.go("/home")}
+              else
+                {debugPrint("wrong credential")}
+            });
 
-        // User(name: _name, email: _email, password: _pass),
-        //     (status) => {
-        //   if (status)
-        //     {context.go("/home")}
-        //   else
-        //     {debugPrint("wrong credential")}
-        // });
+    // User(name: _name, email: _email, password: _pass),
+    //     (status) => {
+    //   if (status)
+    //     {context.go("/home")}
+    //   else
+    //     {debugPrint("wrong credential")}
+    // });
   }
 
   @override
@@ -132,17 +135,7 @@ class _LoginState extends State<Login> {
                     borderRadius: BorderRadius.circular(20))),
           ),
         ),
-        Container(
-          padding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-          child: TextField(
-            onChanged: (value) => {_onPassChanged(value)},
-            decoration: InputDecoration(
-                hintText: "Password",
-                errorText: _passError.isEmpty ? null : _passError,
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20))),
-          ),
-        ),
+        Password(passError: _passError, onPassChanged: _onPassChanged),
         SizedBox(
           width: 350,
           height: 40,
@@ -263,5 +256,29 @@ class _LoginState extends State<Login> {
     //     ),
     //   ),
     // );
+  }
+}
+
+class Password extends StatelessWidget {
+  final Function onPassChanged;
+  final String passError;
+
+  const Password(
+      {Key? key, required this.passError, required this.onPassChanged})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+      child: TextField(
+        onChanged: (value) => {onPassChanged(value)},
+        decoration: InputDecoration(
+            hintText: "Password",
+            errorText: passError.isEmpty ? null : passError,
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(20))),
+      ),
+    );
   }
 }

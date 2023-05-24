@@ -6,6 +6,8 @@ import 'package:hello_flutter/service/auth_service.dart';
 import 'package:hello_flutter/ui/home_tabs/tab1.dart';
 import 'package:hello_flutter/ui/home_tabs/tab2.dart';
 import 'package:hello_flutter/ui/home_tabs/tab3.dart';
+import 'package:hello_flutter/ui/home_tabs/tab4.dart';
+import 'package:hello_flutter/ui/home_tabs/tab5.dart';
 
 import '../data/model/user.dart';
 
@@ -32,7 +34,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     );
   }
 
-  late final _tabController = TabController(length: 3, vsync: this);
+  late final _tabController = TabController(length: 5, vsync: this);
 
   void _toTab(BuildContext context) {
     _tabController.index = 2;
@@ -44,8 +46,14 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     DefaultTabController.of(context).animateTo(0);
   }
 
-  void _onClickNavigate(BuildContext context) {
-    context.push("/thirdTab");
+  void _navigateToCounter(BuildContext context) {
+    Navigator.of(context).pop();
+    context.push("/counter");
+  }
+
+  void _navigateToCanvas(BuildContext context) {
+    Navigator.of(context).pop();
+    context.push("/canvas");
   }
 
   void _logout(BuildContext context) {
@@ -71,7 +79,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         // backgroundColor: Colors.blue,
         appBar: AppBar(
@@ -91,7 +99,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         ),
         body: TabBarView(
             controller: _tabController,
-            children: const [FirstTab(), SecondTab(), ThirdTab()]),
+            children: const [FirstTab(), SecondTab(), ThirdTab(), FourthTab(), FifthTab()]),
         bottomNavigationBar: TabBar(
           controller: _tabController,
           indicatorColor: Colors.blue,
@@ -100,6 +108,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             _tabBarItem("Home", Icons.home),
             _tabBarItem("Setting", Icons.settings),
             _tabBarItem("Profile", Icons.person),
+            _tabBarItem("Profile", Icons.production_quantity_limits),
+            _tabBarItem("Text", Icons.update),
           ],
         ),
         drawer: Container(
@@ -156,6 +166,62 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                     ),
                                     Icon(
                                       Icons.shopping_cart,
+                                      color: Colors.blue.shade700,
+                                      size: 28,
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          ListTile(
+                            onTap: () {
+                              _navigateToCounter(context);
+                            },
+                            title: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Counter",
+                                      style: TextStyle(
+                                        fontSize: 22,
+                                        color: Colors.blue.shade700,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 6,
+                                    ),
+                                    Icon(
+                                      Icons.plus_one,
+                                      color: Colors.blue.shade700,
+                                      size: 28,
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          ListTile(
+                            onTap: () {
+                              _navigateToCanvas(context);
+                            },
+                            title: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Canvas",
+                                      style: TextStyle(
+                                        fontSize: 22,
+                                        color: Colors.blue.shade700,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 6,
+                                    ),
+                                    Icon(
+                                      Icons.animation,
                                       color: Colors.blue.shade700,
                                       size: 28,
                                     )

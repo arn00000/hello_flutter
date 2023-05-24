@@ -49,10 +49,15 @@ class Product {
       price: map["price"] is int ? map["price"].toDouble() : map["price"],
       discountPercentage: map["discountPercentage"] is int
           ? map["discountPercentage"].toDouble()
-          : map["discountPercentage"],
+          : map["discountPercentage"] ?? 0.0,
       rating: map["rating"] is int ? map["rating"].toDouble() : map["rating"],
       stock: map["stock"],
       thumbnail: map["thumbnail"],
     );
+  }
+
+  @override
+  String toString() {
+    return "Product(title: $title brand:$brand description:$description category:$category )";
   }
 }

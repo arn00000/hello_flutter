@@ -1,18 +1,16 @@
-import "package:flutter/material.dart";
-import "package:hello_flutter/data/repository/product_repo_impl.dart";
-import "package:hello_flutter/provider/tab2_provider.dart";
-import "package:provider/provider.dart";
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
-import "../../data/model/product.dart";
+import '../../data/model/product.dart';
 
-class SecondTab extends StatefulWidget {
-  const SecondTab({Key? key}) : super(key: key);
+class FourthTab extends StatefulWidget {
+  const FourthTab({Key? key}) : super(key: key);
 
   @override
-  State<SecondTab> createState() => _SecondTabState();
+  State<FourthTab> createState() => _FourthTabState();
 }
 
-class _SecondTabState extends State<SecondTab> {
+class _FourthTabState extends State<FourthTab> {
   Future<bool> _onConfirmDismiss(DismissDirection dir) async {
     if (dir == DismissDirection.endToStart) {
       return await showDialog(
@@ -29,14 +27,14 @@ class _SecondTabState extends State<SecondTab> {
                       Navigator.of(context).pop(true);
                     },
                     style:
-                        ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                    ElevatedButton.styleFrom(backgroundColor: Colors.red),
                     child: const Text("YES")),
                 ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).pop(false);
                     },
                     style:
-                        ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+                    ElevatedButton.styleFrom(backgroundColor: Colors.blue),
                     child: const Text("NO"))
               ],
             );
@@ -46,61 +44,41 @@ class _SecondTabState extends State<SecondTab> {
     }
   }
 
-  final repo = ProductRepoImpl();
+  void _deleteProduct() async {
+  }
+
+  void _updateProduct() async {
+  }
+
   List<Product> products = [];
+
+  Future<void> getProducts() async {
+    var collection = FirebaseFirestore.instance.collection("products");
+
+    var querySnapshot = await collection.get();
+
+    // var temp = <Product>[];
+
+    for (var item in querySnapshot.docs) {
+      var data = item.data();
+      var product = Product.fromMap(data);
+      setState(() {
+      products.add(product);
+
+      });
+      debugPrint(product.toString());
+    }
+
+    // setState(() {
+    //   products = temp;
+    // });
+    debugPrint(products.toString());
+  }
 
   @override
   void initState() {
     super.initState();
-    _fetchProducts();
-  }
-
-  Future<void> _fetchProducts() async {
-    try {
-      final fetchedProducts = await repo.getProducts();
-      setState(() {
-        products = fetchedProducts;
-      });
-    } catch (e) {
-      debugPrint("Failed to fetch products: $e");
-      // Handle error
-    }
-  }
-
-  void _deleteProduct(String id) async {
-    await repo.deleteItem(id);
-    _fetchProducts();
-  }
-
-  // void _updateProduct(String id) async {
-  //   await repo.updateItem(
-  //       id,
-  //       Product(
-  //           id: id,
-  //           title: "Old",
-  //           description: "Old",
-  //           brand: "Old",
-  //           category: "Old",
-  //           price: 2,
-  //           discountPercentage: 2,
-  //           rating: 2,
-  //           stock: 1,
-  //           thumbnail: "thumbnail"));
-  //   _fetchProducts();
-  // }
-
-  void _onClickAdd() async {
-    await repo.insertItem(Product(
-        title: "New",
-        description: "New",
-        brand: "New",
-        category: "New",
-        price: 2,
-        discountPercentage: 2,
-        rating: 2,
-        stock: 1,
-        thumbnail: "thumbnail"));
-    _fetchProducts();
+    getProducts();
   }
 
   @override
@@ -123,7 +101,7 @@ class _SecondTabState extends State<SecondTab> {
                         child: Dismissible(
                           key: Key(product.id.toString()),
                           onDismissed: (dir) {
-                            _deleteProduct(product.id!);
+                            _deleteProduct();
                           },
                           secondaryBackground: Container(
                             color: Colors.red.shade600,
@@ -176,11 +154,7 @@ class _SecondTabState extends State<SecondTab> {
                                   children: [
                                     GestureDetector(
                                       onTap: () {
-                                        Provider.of<SecondTabProvider>(context,
-                                                listen: false)
-                                            .updateProduct(
-                                                product.id!, _fetchProducts);
-                                        // _updateProduct(product.id!);
+                                        _updateProduct();
                                       },
                                       child: Icon(
                                         Icons.edit,
@@ -192,11 +166,7 @@ class _SecondTabState extends State<SecondTab> {
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        Provider.of<SecondTabProvider>(context,
-                                                listen: false)
-                                            .deleteProduct(
-                                                product.id!, _fetchProducts);
-                                        // _deleteProduct(product.id!);
+                                        _deleteProduct();
                                       },
                                       child: Icon(
                                         Icons.delete,
@@ -214,14 +184,10 @@ class _SecondTabState extends State<SecondTab> {
                   ))),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => {
-          Provider.of<SecondTabProvider>(context, listen: false)
-              .onClickAdd(_fetchProducts)
-          // _onClickAdd()
-        },
-        child: const Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () => {_onClickAdd()},
+      //   child: const Icon(Icons.add),
+      // ),
     );
   }
 }
